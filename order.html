@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>طلب توصيل</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.order-form{
+    width:90%;
+    max-width:600px;
+    margin:40px auto;
+    background:#08152f;
+    padding:25px;
+    border-radius:20px;
+    border:1px solid #00bfff;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.order-form input,
+.order-form textarea,
+.order-form select{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#050816;
+    color:white;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.order-form button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:12px;
+    background:#00bfff;
+    color:#050816;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.order-form button:hover{
+    opacity:.9;
+}
+
+</style>
+
+</head>
+<body>
+
+    <div class="top-bar">
+
+        <a href="index.html" class="back-btn">
+            →
+        </a>
+
+        <a href="index.html" class="home-logo">
+            <img src="logo.png" class="top-logo" alt="SONIC">
+        </a>
+
+    </div>
+
+<img src="logo.png" class="logo">
+
+<h2>طلب توصيل</h2>
+
+<div class="order-form">
+
+    <div class="form-group">
+        <label> اكتب اسم المحل </label>
+        <input type="text" id="shopName" placeholder="اسم المحل  ">
+    </div>
+
+    <div class="form-group">
+        <label>الاسم</label>
+        <input type="text" id="name" placeholder="اكتب اسمك هنا">
+    </div>
+
+    <div class="form-group">
+        <label>رقم التواصل</label>
+        <input type="tel" id="phone" placeholder="اكتب رقم هاتفك هنا">
+    </div>
+
+    <div class="form-group">
+        <label>عنوان الأوردر</label>
+        <select id="city">
+            <option selected disabled>اختر المنطقة</option>
+            <option>ميت الديبة</option>
+            <option>كفر الشيخ</option>
+            <option>قلين</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>طريقة الدفع</label>
+        <select id="paymentMethod">
+            <option selected disabled>اختر طريقة الدفع</option>
+            <option>كاش عند الاستلام</option>
+            <option>فودافون كاش</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>الطلب</label>
+        <textarea id="order" rows="5" placeholder="اكتب طلبك هنا"></textarea>
+    </div>
+
+    <div class="info-box">
+    ⚠️ ملحوظة: الرسوم تختلف حسب مكان التوصيل:
+    <br>
+    📍 داخل ميت الديبة: 15 جنيه
+    <br>
+    📍 من/إلى قلين: 80 جنيه
+    <br>
+    📍 من/إلى كفر الشيخ: 80 جنيه
+    </div>
+
+    <div class="info-box">
+    ⏰ وقت التوصيل المتوقع:
+    <br>
+    داخل ميت الديبة: 15 - 20 دقيقة
+    <br>
+    قلين وكفر الشيخ: 60 - 90 دقيقة
+    </div>
+
+    <p id="pharmacyNote" style="
+    display:none;
+    color:#ffcc00;
+    font-size:14px;
+    margin-top:10px;
+    line-height:1.8;
+    font-weight:bold;
+    background:rgba(255,204,0,.1);
+    padding:10px;
+    border-radius:10px;
+    border:1px solid rgba(255,204,0,.3);
+    ">
+    📷 في حالة وجود روشتة، يُرجى كتابة في الطلب روشته، وإرسالها على الواتساب بعد إرسال الطلب.
+    </p>
+
+    <button type="button" onclick="getLocation()">
+        📍 تحديد موقعي
+    </button>
+
+    <input type="hidden" id="locationLink">
+
+    <button onclick="sendOrder()">
+        🚀 إرسال الطلب
+    </button>
+
+</div>
+
+<script>
+
+/* قراءة البيانات من الرابط */
+
+const params = new URLSearchParams(window.location.search);
+
+const city = params.get("city");
+const shop = params.get("shop");
+
+if(city){
+    document.getElementById("city").value = city;
+    document.getElementById("city").disabled = true;
+}
+
+if(shop){
+    document.getElementById("shopName").value = shop;
+    document.getElementById("shopName").readOnly = true;
+}else{
+    document.getElementById("shopName").readOnly = false;
+}
+
+if(
+    shop &&
+    (
+        shop.includes("صيدلية") ||
+        shop.includes("صيدليه")
+    )
+){
+    document.getElementById("pharmacyNote").style.display = "block";
+}else{
+    document.getElementById("pharmacyNote").style.display = "none";
+}
+
+/* تحديد الموقع */
+
+function getLocation(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(function(position){
+
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+
+            document.getElementById("locationLink").value =
+            `https://maps.google.com/?q=${lat},${lng}`;
+
+            alert("تم تحديد الموقع بنجاح ✅");
+
+        });
+
+    }else{
+
+        alert("المتصفح لا يدعم تحديد الموقع");
+
+    }
+
+}
+
+/* إرسال الطلب */
+
+function sendOrder(){
+
+    let shopName = document.getElementById("shopName").value;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let city = document.getElementById("city").value;
+    let paymentMethod = document.getElementById("paymentMethod").value;
+    let order = document.getElementById("order").value;
+    let locationLink = document.getElementById("locationLink").value;
+
+    if(locationLink === ""){
+
+        alert("📍 يرجى تحديد موقعك أولاً");
+        return;
+
+    }
+
+    if(shopName === "" || name === "" || phone === "" || order === ""){
+
+        alert("يرجى إدخال جميع البيانات");
+        return;
+
+    }
+
+    const orderNumber =
+    "MD-" + Date.now().toString().slice(-6);
+
+    let deliveryPrice = 0;
+
+    if(city === "كفر الشيخ"){
+        deliveryPrice = 80;
+    }
+    else if(city === "قلين"){
+        deliveryPrice = 80;
+    }
+    else{
+        deliveryPrice = 15;
+    }
+
+    let message =
+`طلب جديد
+
+رقم الطلب: ${orderNumber}
+
+المحل: ${shopName}
+
+الاسم: ${name}
+
+الهاتف: ${phone}
+
+المنطقة: ${city}
+
+رسوم التوصيل: ${deliveryPrice} جنيه
+
+طريقة الدفع: ${paymentMethod}
+
+موقعك:
+${locationLink}
+
+الطلب:
+${order}`;
+
+    let url =
+`https://wa.me/201030416791?text=${encodeURIComponent(message)}`;
+
+    alert("✅ تم تجهيز طلبك بنجاح، سيتم فتح الواتساب لإرسال الطلب.");
+    window.open(url,"_blank");
+}
+
+</script>
+
+</body>
+</html>
