@@ -146,7 +146,7 @@ document.querySelectorAll(".shop-card").forEach(card => {
     if (category === "سوبر ماركت")
         badge.style.background = "#f1c40f";
 
-    if (category === "أدوات منزلية")
+    if (category === "مستلزمات منزلية")
         badge.style.background = "#9b59b6";
 
     if (category === "محلات أخرى")
