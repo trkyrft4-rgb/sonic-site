@@ -146,7 +146,7 @@ document.querySelectorAll(".shop-card").forEach(card => {
     if (category === "سوبر ماركت")
         badge.style.background = "#f1c40f";
 
-    if (category === "مستلزمات منزلية")
+    if (category === "أدوات منزلية")
         badge.style.background = "#9b59b6";
 
     if (category === "محلات أخرى")
@@ -158,3 +158,38 @@ document.querySelectorAll(".shop-card").forEach(card => {
 
 document.querySelector(".next").addEventListener("click", scrollRightBtn);
 document.querySelector(".prev").addEventListener("click", scrollLeftBtn);
+
+function getLocation() {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                alert(
+                    "تم تحديد موقعك\n\n" +
+                    "Latitude: " + lat +
+                    "\nLongitude: " + lon
+                );
+
+            },
+
+            function(error) {
+
+                alert("فشل الحصول على الموقع");
+
+            }
+
+        );
+
+    } else {
+
+        alert("المتصفح لا يدعم تحديد الموقع");
+
+    }
+
+}
