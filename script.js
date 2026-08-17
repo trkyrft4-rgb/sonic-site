@@ -158,3 +158,39 @@ document.querySelectorAll(".shop-card").forEach(card => {
 
 document.querySelector(".next").addEventListener("click", scrollRightBtn);
 document.querySelector(".prev").addEventListener("click", scrollLeftBtn);
+
+
+function getLocation() {
+
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position) {
+
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                alert(
+                    "تم تحديد موقعك\n\n" +
+                    "Latitude: " + lat +
+                    "\nLongitude: " + lon
+                );
+
+            },
+
+            function(error) {
+
+                alert("فشل الحصول على الموقع");
+
+            }
+
+        );
+
+    } else {
+
+        alert("المتصفح لا يدعم تحديد الموقع");
+
+    }
+
+}
