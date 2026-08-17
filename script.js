@@ -149,7 +149,7 @@ document.querySelectorAll(".shop-card").forEach(card => {
     if (category === "مستلزمات منزلية")
         badge.style.background = "#9b59b6";
 
-    if (category === "مستلزمات أخرى")
+    if (category === "محلات أخرى")
         badge.style.background = "#3498db";
 
     card.prepend(badge);
