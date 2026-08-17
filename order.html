@@ -111,13 +111,22 @@
     </div>
 
     <div class="form-group">
-        <label>طريقة الدفع</label>
-        <select id="paymentMethod">
-            <option selected disabled>اختر طريقة الدفع</option>
-            <option>كاش عند الاستلام</option>
-            <option>فودافون كاش</option>
-        </select>
-    </div>
+    <label>طريقة الدفع</label>
+
+    <select id="paymentMethod">
+        <option value="" selected disabled hidden>
+            اختر طريقة الدفع
+        </option>
+
+        <option value="الدفع عند الاستلام">
+            الدفع عند الاستلام
+        </option>
+
+        <option value="فودافون كاش">
+            فودافون كاش
+        </option>
+    </select>
+</div>
 
     <div class="form-group">
         <label>الطلب</label>
@@ -261,18 +270,6 @@ function sendOrder(){
     const orderNumber =
     "MD-" + Date.now().toString().slice(-6);
 
-    let deliveryPrice = 0;
-
-    if(city === "كفر الشيخ"){
-        deliveryPrice = 80;
-    }
-    else if(city === "قلين"){
-        deliveryPrice = 80;
-    }
-    else{
-        deliveryPrice = 15;
-    }
-
     let message =
 `طلب جديد
 
@@ -285,8 +282,6 @@ function sendOrder(){
 الهاتف: ${phone}
 
 المنطقة: ${city}
-
-رسوم التوصيل: ${deliveryPrice} جنيه
 
 طريقة الدفع: ${paymentMethod}
 
