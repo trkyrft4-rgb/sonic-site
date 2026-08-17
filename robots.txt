@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://trkyrft4-rgb.github.io/sonic-site/sitemap.xml
