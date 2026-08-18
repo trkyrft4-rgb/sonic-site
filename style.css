@@ -206,12 +206,13 @@ p{
 }
 
 .shop-title{
-    font-size:48px;
+    font-size:32px;
     color:#00bfff;
     font-weight:800;
-    letter-spacing:1px;
+    letter-spacing:0;
     margin-bottom:10px;
     text-shadow:0 0 15px rgba(0,191,255,.7);
+    line-height:1.2;
 }
 
 .shop-link{
@@ -454,6 +455,12 @@ p{
         padding:20px calc(50vw - 120px);
 
         scroll-snap-type:x mandatory;
+
+        .shop-title{
+        font-size:24px;
+        line-height:1.3;
+        padding:0 10px;
+    }
     }
 
     .shop-card{
