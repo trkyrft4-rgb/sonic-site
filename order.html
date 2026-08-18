@@ -69,9 +69,15 @@
 
     <div class="top-bar">
 
-        <a href="index.html" class="back-btn">
-            →
-        </a>
+        <a href="#" class="back-btn" onclick="
+if(history.length > 1){
+    history.back();
+}else{
+    window.location.href='index.html';
+}
+">
+    →
+</a>
 
         <a href="index.html" class="home-logo">
             <img src="logo.png" class="top-logo" alt="SONIC">
