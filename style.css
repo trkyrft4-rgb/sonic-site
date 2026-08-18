@@ -470,32 +470,6 @@ p{
 
 }
 
-
-.logo,
-.hero-box,
-.hero-text,
-h1,
-h2,
-.search-box,
-.categories,
-.shops,
-.delivery-buttons,
-.footer{
-    animation: fadeUp .8s ease;
-}
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
 .footer{
     margin-top:50px;
     padding:20px;
@@ -625,4 +599,46 @@ h2,
 .slider-arrow:hover{
     transform:translateY(-50%) scale(1.1);
     box-shadow:0 0 20px #00bfff;
+}
+
+/* العناصر تظهر بالتدريج */
+
+.logo,
+.hero-box,
+.hero-text,
+h1,
+h2,
+.search-box,
+.categories,
+.shops,
+.delivery-buttons,
+.shop-image,
+.shop-title,
+.info-box,
+.about-shop,
+.stats,
+.order-btn,
+.call-btn,
+.order-form{
+    opacity:0;
+    animation: fadeUp .8s ease forwards;
+}
+
+.shop-title{animation-delay:.1s;}
+.info-box{animation-delay:.2s;}
+.about-shop{animation-delay:.3s;}
+.stats{animation-delay:.4s;}
+.order-btn{animation-delay:.5s;}
+.call-btn{animation-delay:.6s;}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
