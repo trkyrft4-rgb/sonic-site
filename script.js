@@ -163,57 +163,22 @@ document.querySelector(".prev")?.addEventListener("click", scrollLeftBtn);
 
 function getLocation() {
 
-    if (!navigator.geolocation) {
-        alert("المتصفح لا يدعم تحديد الموقع");
-        return;
-    }
-
     navigator.geolocation.getCurrentPosition(
 
-        function (position) {
+        function(position) {
 
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
 
-            alert(
-                "✅ تم تحديد موقعك بنجاح\n\n" +
-                "Latitude: " + lat +
-                "\nLongitude: " + lon
-            );
+            document.getElementById("locationLink").value =
+                `https://maps.google.com/?q=${lat},${lng}`;
 
-            console.log("Latitude:", lat);
-            console.log("Longitude:", lon);
+            alert("تم تحديد الموقع بنجاح ✅");
 
         },
 
-        function (error) {
-
-            switch (error.code) {
-
-                case error.PERMISSION_DENIED:
-                    alert("❌ تم رفض إذن الوصول للموقع. اسمح للموقع بالوصول إلى موقعك ثم حاول مرة أخرى.");
-                    break;
-
-                case error.POSITION_UNAVAILABLE:
-                    alert("❌ لا يمكن تحديد موقعك حالياً. تأكد من تشغيل خدمة الموقع (GPS).");
-                    break;
-
-                case error.TIMEOUT:
-                    alert("⏳ انتهت مهلة تحديد الموقع. حاول مرة أخرى.");
-                    break;
-
-                default:
-                    alert("❌ حدث خطأ أثناء تحديد الموقع.");
-            }
-
-            console.error(error);
-
-        },
-
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
+        function(error) {
+            console.log(error);
         }
 
     );
