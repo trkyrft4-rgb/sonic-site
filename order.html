@@ -224,27 +224,58 @@ if(
 
 /* تحديد الموقع */
 
-function getLocation(){
+function getLocation() {
 
-    if(navigator.geolocation){
+    if (!navigator.geolocation) {
+        alert("المتصفح لا يدعم تحديد الموقع");
+        return;
+    }
 
-        navigator.geolocation.getCurrentPosition(function(position){
+    navigator.geolocation.getCurrentPosition(
+
+        function (position) {
 
             let lat = position.coords.latitude;
             let lng = position.coords.longitude;
 
             document.getElementById("locationLink").value =
-            `https://maps.google.com/?q=${lat},${lng}`;
+                `https://maps.google.com/?q=${lat},${lng}`;
 
             alert("تم تحديد الموقع بنجاح ✅");
 
-        });
+        },
 
-    }else{
+        function (error) {
 
-        alert("المتصفح لا يدعم تحديد الموقع");
+            switch (error.code) {
 
-    }
+                case error.PERMISSION_DENIED:
+                    alert("❌ تم رفض إذن الموقع. اسمح للموقع بالوصول إلى موقعك ثم حاول مرة أخرى.");
+                    break;
+
+                case error.POSITION_UNAVAILABLE:
+                    alert("❌ تعذر تحديد موقعك. تأكد من تشغيل خدمة الموقع (GPS).");
+                    break;
+
+                case error.TIMEOUT:
+                    alert("⏳ انتهت مهلة تحديد الموقع. حاول مرة أخرى.");
+                    break;
+
+                default:
+                    alert("❌ حدث خطأ أثناء تحديد الموقع.");
+            }
+
+            console.error(error);
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
 
 }
 
